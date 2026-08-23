@@ -248,7 +248,7 @@ export class Field {
     this.npTarget = this.computeNp()
     const prevNp = this.np
     this.np = damp(this.np, this.npTarget, S.reduced ? 40 : 6.5, dt)
-    S.p = this.np / (KEYS.length - 1)
+    S.p = this.np / KEYS[KEYS.length - 1].np
     S.ps = S.p
     S.current = ACTS[clamp(Math.round(this.np), 0, ACTS.length - 1)]
 

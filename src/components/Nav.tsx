@@ -47,7 +47,7 @@ export default function Nav() {
     const tick = () => {
       setScrolled(window.scrollY > window.innerHeight * 0.42)
       setAct(S.current)
-      if (bar.current) bar.current.style.transform = `scaleX(${S.p.toFixed(4)})`
+      if (bar.current) bar.current.style.transform = `scaleX(${Math.min(1, S.p).toFixed(4)})`
       raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)

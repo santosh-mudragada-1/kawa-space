@@ -159,11 +159,10 @@ export default function Pipeline() {
     })
     tl.to('#p-ais', { opacity: 1, strokeDashoffset: 0, duration: 0.4, ease: 'power2.inOut' }, 3.3)
 
-    // 04 → 05  the target pulses once more, then the finding draws itself
-    // outward from it — slow and settling, this is the resolution; nothing
-    // downstream is racing it, so it's the one stage allowed to take its time
-    tl.to('#p-lock-ring', { scale: 1.22, duration: 0.3, ease: 'power2.out', yoyo: true, repeat: 1, transformOrigin: `${KP.x}px ${KP.y}px` }, 3.85)
-      .to('#p-verdict', { opacity: 1, duration: 0.2 }, 4.0)
+    // 04 → 05  the finding draws itself outward from the lock — slow and
+    // settling, this is the resolution; nothing downstream is racing it,
+    // so it's the one stage allowed to take its time
+    tl.to('#p-verdict', { opacity: 1, duration: 0.2 }, 4.0)
       .to('#p-verdict-link', { strokeDashoffset: 0, duration: 0.3, ease: 'power1.inOut' }, 4.05)
       .from('#p-verdict rect', { scaleX: 0, transformOrigin: 'left center', duration: 0.35, ease: 'power2.out' }, 4.3)
       .from('#p-verdict text', { opacity: 0, duration: 0.28, stagger: 0.07 }, 4.5)
