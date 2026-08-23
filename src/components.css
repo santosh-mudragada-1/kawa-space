@@ -54,7 +54,14 @@
   letter-spacing: .14em; text-transform: uppercase; color: var(--paper-38);
   padding-left: clamp(12px, 1.6vw, 26px);
   border-left: 1px solid var(--line);
-  min-width: 12ch;
+  /* fixed, not min — a min-width still let strings resize the box and push
+     every link before it left or right as the act changed while scrolling.
+     em, not ch, since letter-spacing throws off ch's glyph-width assumption —
+     measured "Forward deployed" (the longest readout) at 178px against an
+     11.52px font-size, so 16.5em gives real margin at any responsive size */
+  width: 16.5em;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .nav__pulse {
   width: 5px; height: 5px; border-radius: 50%; background: var(--sig); flex: none;
