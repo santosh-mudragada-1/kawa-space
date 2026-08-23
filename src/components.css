@@ -31,9 +31,11 @@
   display: flex; align-items: center; gap: clamp(12px, 1.9vw, 30px);
   margin-left: auto;
   position: relative;
-  /* reserves room for the absolutely-positioned status readout below so it
-     never sits under "Contact" — sized past its widest real content (~21em) */
-  padding-right: 21em;
+  /* reserves just enough room for the absolutely-positioned status readout
+     that it never sits under "Contact" — sized to the longest real string
+     ("Forward deployed", measured ~178px / 15.45em) plus a small margin,
+     not the much larger reservation that pushed the links away from the edge */
+  padding-right: 16em;
 }
 .nav__link {
   position: relative;
@@ -53,12 +55,12 @@
 .nav__link:hover::after, .nav__link:focus-visible::after { transform: scaleX(1); transform-origin: left; }
 
 .nav__status {
-  /* taken completely out of flow — a fixed width with overflow:hidden here
-     previously clipped the text to nothing whenever the real render came in
-     even slightly wider than the measured budget. Absolute positioning means
-     its content can never push the links (nothing to reflow) and is never
-     clipped (no width constraint to violate) — both bugs solved by removing
-     the mechanism, not by re-tuning it */
+  /* absolute, not in flow — confirmed in the browser that this is what
+     actually keeps the text visible; the in-flow min-width version broke
+     rendering in practice even though it measured fine in this sandbox's
+     Chromium, so trust the live result over a mechanism that only looked
+     correct here. Kept out of flow means it can't push the links, and it
+     carries no width/overflow constraint, so nothing can clip it either */
   position: absolute; right: 0; top: 50%; transform: translateY(-50%);
   display: flex; align-items: center; gap: .6rem;
   font-family: var(--mono); font-size: var(--t-mono);
