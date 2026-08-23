@@ -240,7 +240,11 @@
 }
 .studio__crew i:first-child { margin-left: 0; }
 
-.studio__body { display: grid; grid-template-columns: 1fr; min-height: clamp(330px, 44vh, 480px); }
+/* fixed, not min-height — the AOI map's own SVG viewBox was tall enough to
+   push this row taller than the other three tabs, so switching tabs visibly
+   resized the whole studio panel. All tabs now share one height; the AOI
+   map is constrained to fit inside it instead (see .aoi below) */
+.studio__body { display: grid; grid-template-columns: 1fr; height: clamp(330px, 44vh, 480px); }
 @media (min-width: 820px) { .studio__body { grid-template-columns: 172px 1fr 190px; } }
 
 .studio__tabs { border-right: 1px solid var(--line); padding: .8rem 0; display: flex; flex-direction: row; overflow-x: auto; scrollbar-width: none; }
@@ -261,7 +265,12 @@
 .studio__tab[aria-selected='true']::before { transform: scaleY(1); }
 .studio__tab em { font-style: normal; color: var(--paper-22); }
 
-.studio__panel { position: relative; padding: clamp(1rem, 2vw, 1.6rem); border-bottom: 1px solid var(--line); }
+.studio__panel {
+  position: relative; height: 100%; box-sizing: border-box;
+  padding: clamp(1rem, 2vw, 1.6rem); border-bottom: 1px solid var(--line);
+  overflow: hidden; display: flex; flex-direction: column;
+}
+.studio__panel > div { min-height: 0; flex: 1; }
 @media (min-width: 820px) { .studio__panel { border-bottom: 0; border-right: 1px solid var(--line); } }
 
 .studio__side { padding: clamp(1rem, 2vw, 1.4rem); display: flex; flex-direction: column; gap: 1.1rem; }
@@ -287,8 +296,11 @@
 .q__st[data-s='queued'] { color: var(--paper-38); }
 .q__st[data-s='downlink'] { color: var(--cold); }
 
-.aoi { position: relative; }
-.aoi svg { width: 100%; height: auto; display: block; }
+/* constrained on both axes and centred, not width:100%/height:auto — at the
+   panel's actual width that stretched the map (and its text) well past the
+   scale of every other tab's content */
+.aoi { position: relative; height: 100%; display: flex; align-items: center; justify-content: center; }
+.aoi svg { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; }
 .wf { width: 100%; height: clamp(150px, 26vh, 230px); display: block; image-rendering: pixelated; border: 1px solid var(--line); }
 .wf-legend { display: flex; justify-content: space-between; margin-top: .6rem; font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--paper-38); }
 

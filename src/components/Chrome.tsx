@@ -1,18 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { S, ACTS, type ActId } from '../gl/state'
 import { isCoarse } from '../lib/env'
-
-const ACT_LABELS: Record<ActId, string> = {
-  hero: 'Acquisition',
-  signal: 'Signal layer',
-  pipeline: 'Processing',
-  domains: 'Domains',
-  constellation: 'Constellation',
-  studio: 'Operations',
-  fusion: 'Fusion',
-  mission: 'Mission',
-  final: 'Link',
-}
 
 /* ---------- instrument frame ---------- */
 export function Frame() {
@@ -22,28 +9,6 @@ export function Frame() {
       <div className="frame__edge frame__edge--l" />
       <div className="frame__edge frame__edge--r" />
     </div>
-  )
-}
-
-/* ---------- left telemetry rail ---------- */
-export function Rail() {
-  const [cur, setCur] = useState<ActId>('hero')
-  useEffect(() => {
-    let id = 0
-    const tick = () => { setCur(S.current); id = requestAnimationFrame(tick) }
-    id = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(id)
-  }, [])
-  return (
-    <nav className="rail" aria-label="Section progress">
-      {ACTS.map((a, i) => (
-        <div key={a} className="rail__item" data-on={a === cur ? '1' : '0'}>
-          <span className="rail__bar" />
-          <span>{String(i).padStart(2, '0')}</span>
-          <span style={{ opacity: a === cur ? 1 : 0, transition: 'opacity .5s' }}>{ACT_LABELS[a]}</span>
-        </div>
-      ))}
-    </nav>
   )
 }
 

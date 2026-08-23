@@ -98,7 +98,14 @@ export default function Nav() {
           ))}
           <span className="nav__status">
             <span className="nav__pulse" aria-hidden="true" />
-            <span>{READOUT[act]}</span>
+            <span className="nav__status-stack">
+              {/* invisible, always the longest readout — sets the box's width
+                  via real layout, not a guessed CSS unit, so it can never be
+                  wrong for whatever font actually renders and never clips
+                  the real text sitting on top of it */}
+              <span className="nav__status-ghost" aria-hidden="true">Forward deployed</span>
+              <span className="nav__status-text">{READOUT[act]}</span>
+            </span>
           </span>
         </nav>
 

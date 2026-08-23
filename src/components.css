@@ -30,12 +30,6 @@
 .nav__links {
   display: flex; align-items: center; gap: clamp(12px, 1.9vw, 30px);
   margin-left: auto;
-  position: relative;
-  /* reserves just enough room for the absolutely-positioned status readout
-     that it never sits under "Contact" — sized to the longest real string
-     ("Forward deployed", measured ~178px / 15.45em) plus a small margin,
-     not the much larger reservation that pushed the links away from the edge */
-  padding-right: 16em;
 }
 .nav__link {
   position: relative;
@@ -55,13 +49,6 @@
 .nav__link:hover::after, .nav__link:focus-visible::after { transform: scaleX(1); transform-origin: left; }
 
 .nav__status {
-  /* absolute, not in flow — confirmed in the browser that this is what
-     actually keeps the text visible; the in-flow min-width version broke
-     rendering in practice even though it measured fine in this sandbox's
-     Chromium, so trust the live result over a mechanism that only looked
-     correct here. Kept out of flow means it can't push the links, and it
-     carries no width/overflow constraint, so nothing can clip it either */
-  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
   display: flex; align-items: center; gap: .6rem;
   font-family: var(--mono); font-size: var(--t-mono);
   letter-spacing: .14em; text-transform: uppercase; color: var(--paper-56);
@@ -69,6 +56,16 @@
   border-left: 1px solid var(--line);
   white-space: nowrap;
 }
+.nav__status-stack {
+  /* the box's real size comes from the invisible ghost (always the same
+     string) laid out normally beneath it — genuine browser text measurement,
+     not a guessed em/ch/px value, so it can't be wrong for whatever font
+     actually ends up rendering. The real text sits on top via absolute
+     positioning, so it can never influence the box size or get clipped by it */
+  position: relative; display: inline-block;
+}
+.nav__status-ghost { visibility: hidden; white-space: nowrap; }
+.nav__status-text { position: absolute; left: 0; top: 0; white-space: nowrap; }
 .nav__pulse {
   width: 5px; height: 5px; border-radius: 50%; background: var(--sig); flex: none;
   animation: pulse 2.4s var(--ease) infinite;

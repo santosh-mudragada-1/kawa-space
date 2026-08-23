@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Boot from './components/Boot'
 import Nav from './components/Nav'
 import FieldCanvas from './components/FieldCanvas'
-import { Frame, Rail, Reticle } from './components/Chrome'
+import { Frame, Reticle } from './components/Chrome'
 import Hero from './components/sections/Hero'
 import SignalLayer from './components/sections/SignalLayer'
 import Pipeline from './components/sections/Pipeline'
@@ -36,7 +36,6 @@ export default function App() {
       <a className="skip" href="#signal">Skip to content</a>
       <FieldCanvas onSatHover={setHoverSat} />
       <Frame />
-      <Rail />
       <Reticle />
       <Nav />
 

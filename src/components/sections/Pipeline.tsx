@@ -64,10 +64,11 @@ function bezierThroughKP(p0: [number, number], p2: [number, number]) {
   return `M${p0[0]} ${p0[1]} Q ${cx} ${cy} ${p2[0]} ${p2[1]}`
 }
 // endpoints kept well inside the map panel (40–680, 120–526); each curve's peak/trough
-// is solved algebraically (not eyeballed) to confirm it never leaves that box either
+// is solved algebraically (not eyeballed) to confirm it never leaves that box either.
+// two bearings only — a tall arch and a shallow line near-tangent to its peak, not
+// three, since the third (bowing hard right toward the panel edge) read as arbitrary
 const TDOA = [
   bezierThroughKP([60, 470], [650, 405]),
-  bezierThroughKP([120, 140], [300, 505]),
   bezierThroughKP([670, 195], [150, 300]),
 ]
 
@@ -162,8 +163,6 @@ export default function Pipeline() {
     // outward from it — slow and settling, this is the resolution; nothing
     // downstream is racing it, so it's the one stage allowed to take its time
     tl.to('#p-lock-ring', { scale: 1.22, duration: 0.3, ease: 'power2.out', yoyo: true, repeat: 1, transformOrigin: `${KP.x}px ${KP.y}px` }, 3.85)
-      .fromTo('#p-ripple', { opacity: 0.7, scale: 0.3, transformOrigin: `${KP.x}px ${KP.y}px` },
-        { opacity: 0, scale: 2.2, duration: 0.5, ease: 'power2.out' }, 3.85)
       .to('#p-verdict', { opacity: 1, duration: 0.2 }, 4.0)
       .to('#p-verdict-link', { strokeDashoffset: 0, duration: 0.3, ease: 'power1.inOut' }, 4.05)
       .from('#p-verdict rect', { scaleX: 0, transformOrigin: 'left center', duration: 0.35, ease: 'power2.out' }, 4.3)
